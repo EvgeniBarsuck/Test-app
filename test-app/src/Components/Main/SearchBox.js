@@ -4,8 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Link } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectedHeroActions } from '../../Redux/Hero/actions';
+import { getFilterHeroActions } from '../../Redux/Hero/actions';
 
 const useStyles = makeStyles({
   option: {
@@ -26,25 +27,26 @@ const useStyles = makeStyles({
 export default function HeroSelect() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const filterResult = useSelector((state) => state.hero.oneHero.results);
+  const filterResult = useSelector((state) => state.hero.filterResult);
+  const history = useHistory();
 
   return (
     <Autocomplete
-      id="country-select-demo"
+      id="free-solo-demo"
       style={{ width: 300 }}
       options={filterResult || []}
       classes={{
         option: classes.option,
       }}
-      autoHighlight
-      getOptionLabel={(option) => option.name}
+      freeSolo
+      getOptionLabel={(option) => option.name || ' '}
       renderOption={(option) => (
         // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <div className={classes.root}>
           <p>{ `${option.name}` }</p>
           <Link underline="none" href={`/hero/${option.id}`}>
             <Button>
-              search
+              open
             </Button>
           </Link>
         </div>
@@ -56,7 +58,8 @@ export default function HeroSelect() {
           label="Choose a hero"
           variant="outlined"
           autoComplete="new-password"
-          onKeyUp={() => dispatch(getSelectedHeroActions(null, params.inputProps.value))}
+          onKeyUp={() => dispatch(getFilterHeroActions(params.inputProps.value))}
+          onKeyDown={(e) => { if (e.keyCode === 13) history.push('/hero/seacrh'); }}
           inputProps={{
             ...params.inputProps,
           }}
