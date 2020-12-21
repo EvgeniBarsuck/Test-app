@@ -55,7 +55,7 @@ ResultPage.propTypes = {
   hero: PropTypes.shape({
     filterSearchResult: PropTypes.arrayOf(Object).isRequired,
     loading: PropTypes.bool.isRequired,
-    nextPageSearch: PropTypes.string.isRequired,
+    nextPageSearch: PropTypes.string,
   }).isRequired,
 };
 
