@@ -57,7 +57,7 @@ function* sagaOneHeroWorker(action) {
 function* sagaFilterHeroWorker(action) {
   try {
     yield put({ type: GET_FILTER_HERO_START });
-    const payloads = yield call(fetchFilterHero, action.name, action.nextPage);
+    const payloads = yield call(fetchFilterHero, action.name);
     yield put({ type: GET_FILTER_HERO_SUCCESS, payload: payloads.data });
   } catch (e) {
     yield put({ type: GET_FILTER_HERO_FAILURE, payload: e });

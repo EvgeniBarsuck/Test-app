@@ -57,7 +57,7 @@ MainPage.propTypes = {
   hero: PropTypes.shape({
     hero: PropTypes.arrayOf(Object).isRequired,
     loading: PropTypes.bool.isRequired,
-    nextPage: PropTypes.string.isRequired,
+    nextPage: PropTypes.string,
   }).isRequired,
 };
 

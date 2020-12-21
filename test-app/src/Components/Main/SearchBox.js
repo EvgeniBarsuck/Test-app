@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-use-before-define */
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,7 +39,6 @@ export default function HeroSelect() {
       freeSolo
       getOptionLabel={(option) => option.name || ' '}
       renderOption={(option) => (
-        // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <div className={classes.root}>
           <p>{ `${option.name}` }</p>
           <Link underline="none" href={`/hero/${option.id}`}>

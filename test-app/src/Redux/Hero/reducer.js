@@ -17,7 +17,7 @@ import {
 const initialState = {
   hero: [],
   oneHero: {},
-  nextPage: 2,
+  nextPage: '2',
   filterSearchResult: [],
   filterResult: [],
   nextPageSearch: 0,

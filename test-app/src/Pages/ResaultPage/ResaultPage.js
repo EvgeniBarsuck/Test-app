@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cards from '../../Components/Main/Cards';
 import { getSelectedFilterHeroActions } from '../../Redux/Hero/actions';
-import HeroSelect from '../../Components/Main/SearchBox';
 import { CONCAT_HERO } from '../../Redux/Hero/types';
 
 const style = {
@@ -39,9 +38,6 @@ class ResultPage extends React.Component {
   render() {
     return (
       <>
-        <div style={style.root}>
-          <HeroSelect />
-        </div>
         <div style={style.root}>
           {this.props.hero.filterSearchResult.map((item) => (
             <Cards item={item} key={item.id} />

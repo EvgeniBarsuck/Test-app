@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { blue } from '@material-ui/core/colors';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// eslint-disable-next-line react/prop-types
 export default function RecipeReviewCard({ item }) {
   const classes = useStyles();
 
@@ -54,3 +53,13 @@ export default function RecipeReviewCard({ item }) {
     </Card>
   );
 }
+
+RecipeReviewCard.propTypes = {
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+};
