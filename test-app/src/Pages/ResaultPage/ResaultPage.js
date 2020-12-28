@@ -1,9 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Cards from '../../Components/Main/Cards';
-import { getSelectedFilterHeroActions } from '../../Redux/Hero/actions';
-import { CONCAT_HERO } from '../../Redux/Hero/types';
 
 const style = {
   root: {
@@ -15,23 +12,17 @@ const style = {
   },
 };
 
-class ResultPage extends React.Component {
+class ResaultPage extends React.Component {
   constructor(props) {
     super(props);
     window.onscroll = this.windowScroll.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.concatHero();
   }
 
   // eslint-disable-next-line class-methods-use-this
   windowScroll() {
     const { scrollTop, offsetHeight } = document.documentElement;
     if (window.innerHeight + scrollTop === offsetHeight) {
-      if (this.props.hero.nextPageSearch) {
-        this.props.getSelectedFilterHeroActions(this.props.hero.nextPageSearch);
-      }
+      // this.props.getSelectedFilterHeroActions(this.props.hero.nextPageSearch);
     }
   }
 
@@ -39,34 +30,18 @@ class ResultPage extends React.Component {
     return (
       <>
         <div style={style.root}>
-          {this.props.hero.filterSearchResult.map((item) => (
+          {this.props.filterHeroes.map((item) => (
             <Cards item={item} key={item.id} />
           ))}
         </div>
-        {this.props.hero.nextPageSearch ? '' : <p>End.</p>}
+        {this.props.filterHeroes ? '' : <p>End.</p>}
       </>
     );
   }
 }
 
-ResultPage.propTypes = {
-  getSelectedFilterHeroActions: PropTypes.func.isRequired,
-  concatHero: PropTypes.func.isRequired,
-  hero: PropTypes.shape({
-    filterSearchResult: PropTypes.arrayOf(Object).isRequired,
-    loading: PropTypes.bool.isRequired,
-    nextPageSearch: PropTypes.string,
-  }).isRequired,
+ResaultPage.propTypes = {
+  filterHeroes: PropTypes.arrayOf(Object).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  hero: state.hero,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getSelectedFilterHeroActions:
-  (nextPageSearch) => dispatch(getSelectedFilterHeroActions(nextPageSearch)),
-  concatHero: () => dispatch({ type: CONCAT_HERO }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResultPage);
+export default ResaultPage;

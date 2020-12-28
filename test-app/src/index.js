@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
+import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './Redux/rootReducer';
@@ -14,7 +13,7 @@ import sagaWatcher from './Redux/Hero/saga';
 const saga = createSagaMiddleware();
 
 const store = createStore(rootReducer, compose(
-  applyMiddleware(thunk, saga),
+  applyMiddleware(saga),
   // eslint-disable-next-line no-underscore-dangle
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 ));

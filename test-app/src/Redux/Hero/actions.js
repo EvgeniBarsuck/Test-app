@@ -1,37 +1,53 @@
 import {
-  REQUEST_HERO,
-  REQUEST_ONE_HERO,
-  REQUEST_FILTER_HERO,
-  REQUEST_SEARCH_HERO,
-} from './types';
+  REQUEST_HEROES,
+  REQUEST_SELECTED_HERO,
+  REQUEST_SEARCH_BOX_HINTS,
+  REQUEST_FILTER_HEROES,
+  CLEAR_ALL_HEROES_LIST,
+  CHANGE_LIMIT_AND_PAGE,
+} from './const';
 
-export function getHeroActions(page) {
+export function getAllHeroesListActions(page, limit) {
   return {
-    type: REQUEST_HERO,
+    type: REQUEST_HEROES,
     page,
+    limit,
   };
 }
 
-export function getSelectedHeroActions(id, name) {
+export function clearAllHeroesList() {
   return {
-    type: REQUEST_ONE_HERO,
+    type: CLEAR_ALL_HEROES_LIST,
+  };
+}
+
+export function changeLimitAndPage(limit, page) {
+  return {
+    type: CHANGE_LIMIT_AND_PAGE,
+    payload: {
+      limit,
+      page,
+    },
+  };
+}
+
+export function getSelectedHeroActions(id) {
+  return {
+    type: REQUEST_SELECTED_HERO,
     id,
-    name,
   };
 }
 
-export function getFilterHeroActions(name) {
+export function getSearchBoxHintsActions(filter) {
   return {
-    type: REQUEST_FILTER_HERO,
-    name,
+    type: REQUEST_SEARCH_BOX_HINTS,
+    filter,
   };
 }
 
-export function getSelectedFilterHeroActions(page) {
+export function getFilterHeroesActions(filter) {
   return {
-    type: REQUEST_SEARCH_HERO,
-    page,
+    type: REQUEST_FILTER_HEROES,
+    filter,
   };
 }
-
-export default { getHeroActions };

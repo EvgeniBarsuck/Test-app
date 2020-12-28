@@ -2,9 +2,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Link } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilterHeroActions } from '../../Redux/Hero/actions';
+import { getSearchBoxHintsActions } from '../../Redux/Hero/actions';
 
 const useStyles = makeStyles({
   option: {
@@ -22,17 +21,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function HeroSelect() {
+// eslint-disable-next-line react/prop-types
+export default function HeroSelect({ onSelecthandleChange }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const filterResult = useSelector((state) => state.hero.filterResult);
-  const history = useHistory();
+  const searchBoxHints = useSelector((state) => state.hero.searchBoxHints);
+  const limit = useSelector((state) => state.hero.limit);
 
   return (
     <Autocomplete
-      id="free-solo-demo"
+      id="searchBox"
       style={{ width: 300 }}
-      options={filterResult || []}
+      options={searchBoxHints || []}
       classes={{
         option: classes.option,
       }}
@@ -55,8 +55,14 @@ export default function HeroSelect() {
           label="Choose a hero"
           variant="outlined"
           autoComplete="new-password"
-          onKeyUp={() => dispatch(getFilterHeroActions(params.inputProps.value))}
-          onKeyDown={(e) => { if (e.keyCode === 13) history.push('/hero/seacrh'); }}
+          onKeyUp={() => {
+            onSelecthandleChange(params.inputProps.id, params.inputProps.value);
+            dispatch(getSearchBoxHintsActions({
+              name: params.inputProps.value,
+              page: 1,
+              limit,
+            }));
+          }}
           inputProps={{
             ...params.inputProps,
           }}
