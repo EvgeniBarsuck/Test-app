@@ -22,7 +22,7 @@ const style = () => ({
     justifyContent: 'center',
     marginTop: '10px',
     overflowY: 'auto',
-    maxHeight: '98vh',
+    maxHeight: '90vh',
   },
   table: {
     maxWidth: 400,

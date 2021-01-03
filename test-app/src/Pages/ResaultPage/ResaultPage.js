@@ -7,19 +7,27 @@ class ResaultPage extends React.Component {
     const { classes } = this.props;
     return (
       <>
+        <p>
+          Number of search results:
+          {` ${this.props.data.filterHeroesPageCount * this.props.data.pageLimit}`}
+          (limit 100)
+        </p>
         <div className={classes.cardResault}>
-          {this.props.filterHeroes.map((item) => (
+          {this.props.data.filterHeroes.map((item) => (
             <Cards item={item} key={item.id} />
           ))}
         </div>
-        {this.props.filterHeroes ? '' : <p>End.</p>}
       </>
     );
   }
 }
 
 ResaultPage.propTypes = {
-  filterHeroes: PropTypes.arrayOf(Object).isRequired,
+  data: PropTypes.shape({
+    filterHeroes: PropTypes.arrayOf(Object).isRequired,
+    filterHeroesPageCount: PropTypes.number.isRequired,
+    pageLimit: PropTypes.number.isRequired,
+  }).isRequired,
   classes: PropTypes.shape({
     cardResault: PropTypes.string.isRequired,
   }).isRequired,

@@ -5,7 +5,7 @@ import resaultPageSelector from '../Selectors/resaultPageSelector';
 import style from '../Style/mainStyle';
 
 const mapStateToProps = (state) => ({
-  filterHeroes: resaultPageSelector(state),
+  data: resaultPageSelector(state),
 });
 
 export default withStyles(style)(connect(mapStateToProps, null)(ResaultPage));

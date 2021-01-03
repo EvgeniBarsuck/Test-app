@@ -2,13 +2,17 @@ import { createSelector } from 'reselect';
 
 const getFilterHeroes = (state) => state.hero.filterHeroes;
 const getFilterHeroesPageCount = (state) => state.hero.filterHeroesPageCount;
-const getFilterPage = (state) => state.hero.filterPage;
+const getPageLimit = (state) => state.hero.limit;
 
 const resaultPageSelector = createSelector(
   getFilterHeroes,
   getFilterHeroesPageCount,
-  getFilterPage,
-  (filterHeroes) => filterHeroes,
+  getPageLimit,
+  (filterHeroes, filterHeroesPageCount, pageLimit) => ({
+    filterHeroes,
+    filterHeroesPageCount,
+    pageLimit,
+  }),
 );
 
 export default resaultPageSelector;

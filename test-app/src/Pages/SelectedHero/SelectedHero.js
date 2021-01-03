@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import InformationTable from '../../Components/Main/InformationTable';
@@ -34,8 +33,16 @@ class SelectedHero extends React.Component {
 }
 
 SelectedHero.propTypes = {
-  classes: PropTypes.shape({
-    card: PropTypes.string.isRequired,
+  getSelectedHero: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    selectedHero: PropTypes.shape({
+      name: PropTypes.string,
+      status: PropTypes.string.isRequired,
+      species: PropTypes.string.isRequired,
+      gender: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
+    loading: PropTypes.bool.isRequired,
   }).isRequired,
 };
 
