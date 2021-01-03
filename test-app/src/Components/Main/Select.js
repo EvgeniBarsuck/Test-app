@@ -21,7 +21,7 @@ const useStyles = {
   },
 };
 
-export default class SimpleSelect extends React.Component {
+class SimpleSelect extends React.Component {
   handleChange = (event) => {
     this.props.onSelecthandleChange(event.target.name, event.target.value);
   };
@@ -102,3 +102,5 @@ SimpleSelect.propTypes = {
   onSelecthandleChange: PropTypes.func.isRequired,
   limit: PropTypes.number.isRequired,
 };
+
+export default React.memo(SimpleSelect);

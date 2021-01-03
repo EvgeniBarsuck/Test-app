@@ -1,28 +1,13 @@
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
 import { Button, Link } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchBoxHintsActions } from '../../Redux/Hero/actions';
-
-const useStyles = makeStyles({
-  option: {
-    fontSize: 15,
-    '& > span': {
-      marginRight: 10,
-      fontSize: 18,
-    },
-  },
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-});
+import useStyles from '../../Style/searchBoxStyle';
 
 // eslint-disable-next-line react/prop-types
-export default function HeroSelect({ onSelecthandleChange }) {
+const HeroSelect = React.memo(({ onSelecthandleChange }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const searchBoxHints = useSelector((state) => state.hero.searchBoxHints);
@@ -70,4 +55,6 @@ export default function HeroSelect({ onSelecthandleChange }) {
       )}
     />
   );
-}
+});
+
+export default HeroSelect;

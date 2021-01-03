@@ -6,26 +6,10 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { blue } from '@material-ui/core/colors';
+import useStyles from '../../Style/cardStyle';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    width: 300,
-    margin: 10,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
-    paddingLeft: 5,
-  },
-  avatar: {
-    backgroundColor: blue[500],
-  },
-}));
-
-export default function RecipeReviewCard({ item }) {
+const RecipeReviewCard = React.memo(({ item }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +36,7 @@ export default function RecipeReviewCard({ item }) {
       </CardActions>
     </Card>
   );
-}
+});
 
 RecipeReviewCard.propTypes = {
   item: PropTypes.shape({
@@ -63,3 +47,5 @@ RecipeReviewCard.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired,
 };
+
+export default RecipeReviewCard;

@@ -18,10 +18,13 @@ import {
 const initialState = {
   allHeroesList: [],
   page: 1,
+  allHeroesListPage: 1,
   limit: 25,
   selectedHero: {},
   searchBoxHints: [],
   filterHeroes: [],
+  filterHeroesPageCount: 1,
+  filterPage: 1,
   loading: true,
 };
 
@@ -35,6 +38,7 @@ export const heroReducer = (state = initialState, action) => {
     case GET_ALL_HEROES_LIST_SUCCESS: return {
       ...state,
       allHeroesList: state.allHeroesList.concat(action.payload),
+      allHeroesListPage: action.allHeroesListPage,
       loading: false,
     };
     case GET_ALL_HEROES_LIST_FAILURE: return {
@@ -90,6 +94,7 @@ export const heroReducer = (state = initialState, action) => {
     case GET_FILTER_HEROES_SUCCESS: return {
       ...state,
       filterHeroes: action.payload,
+      filterHeroesPageCount: action.filterHeroesPageCount,
       loading: false,
     };
     case GET_FILTER_HEROES_FAILURE: return {

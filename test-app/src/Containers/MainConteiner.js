@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core';
 import mainSelector from '../Selectors/mainSelector';
 import MainPage from '../Pages/Main/Main';
 import {
@@ -7,6 +8,7 @@ import {
   changeLimitAndPage,
   getFilterHeroesActions,
 } from '../Redux/Hero/actions';
+import style from '../Style/mainStyle';
 
 const mapStateToProps = (state) => ({
   data: mainSelector(state),
@@ -19,4 +21,4 @@ const mapDispatchToProps = (dispatch) => ({
   getFilterHeroesActions: (filter) => dispatch(getFilterHeroesActions(filter)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default withStyles(style)(connect(mapStateToProps, mapDispatchToProps)(MainPage));

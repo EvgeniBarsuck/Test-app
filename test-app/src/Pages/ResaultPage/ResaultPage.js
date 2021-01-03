@@ -2,34 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cards from '../../Components/Main/Cards';
 
-const style = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '10px',
-  },
-};
-
 class ResaultPage extends React.Component {
-  constructor(props) {
-    super(props);
-    window.onscroll = this.windowScroll.bind(this);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  windowScroll() {
-    const { scrollTop, offsetHeight } = document.documentElement;
-    if (window.innerHeight + scrollTop === offsetHeight) {
-      // this.props.getSelectedFilterHeroActions(this.props.hero.nextPageSearch);
-    }
-  }
-
   render() {
+    const { classes } = this.props;
     return (
       <>
-        <div style={style.root}>
+        <div className={classes.cardResault}>
           {this.props.filterHeroes.map((item) => (
             <Cards item={item} key={item.id} />
           ))}
@@ -42,6 +20,9 @@ class ResaultPage extends React.Component {
 
 ResaultPage.propTypes = {
   filterHeroes: PropTypes.arrayOf(Object).isRequired,
+  classes: PropTypes.shape({
+    cardResault: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-export default ResaultPage;
+export default React.memo(ResaultPage);

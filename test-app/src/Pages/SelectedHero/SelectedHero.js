@@ -1,15 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-
-const style = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '10px',
-  },
-};
+import PropTypes from 'prop-types';
+import InformationTable from '../../Components/Main/InformationTable';
 
 class SelectedHero extends React.Component {
   constructor(props) {
@@ -21,18 +13,30 @@ class SelectedHero extends React.Component {
     if (this.props.data.loading) {
       return (<p>Loading data</p>);
     }
+    const {
+      name,
+      status,
+      species,
+      gender,
+    } = this.props.data.selectedHero;
     return (
-      <div style={style.root}>
+      <div>
         <img src={this.props.data.selectedHero.image} alt="error" />
-        <ul style={{ listStyleType: 'none' }}>
-          <li>{`Name: ${this.props.data.selectedHero.name}`}</li>
-          <li>{`Status: ${this.props.data.selectedHero.status}`}</li>
-          <li>{`Species: ${this.props.data.selectedHero.species}`}</li>
-          <li>{`Gender: ${this.props.data.selectedHero.gender}`}</li>
-        </ul>
+        <InformationTable
+          name={name}
+          status={status}
+          species={species}
+          gender={gender}
+        />
       </div>
     );
   }
 }
 
-export default SelectedHero;
+SelectedHero.propTypes = {
+  classes: PropTypes.shape({
+    card: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default React.memo(SelectedHero);

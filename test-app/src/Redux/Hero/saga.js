@@ -21,23 +21,24 @@ import {
 
 async function fetchAllHeroList(page, limit) {
   const response = await axios.get(`http://localhost:5000/api/hero/?page=${page}&limit=${limit}`);
+
   return response;
 }
 
 async function fetchSelectedHero(id) {
   const response = await axios.get(`http://localhost:5000/api/hero/${id}`);
+
   return response;
 }
 
 async function fetchHeroesWithFilter(filter) {
   const page = filter.page || 1;
-  const limit = filter.limit || 25;
   const searchBox = filter.searchBox || '';
   const status = filter.status || '';
   const species = filter.species || '';
   const gender = filter.gender || '';
 
-  const response = await axios.get(`http://localhost:5000/api/hero/?page=${page}&limit=${limit}&name=${searchBox}&status=${status}&species=${species}&gender=${gender}`);
+  const response = await axios.get(`http://localhost:5000/api/hero/?page=${page}&limit=100&name=${searchBox}&status=${status}&species=${species}&gender=${gender}&isFilter=true`);
 
   return response;
 }
@@ -46,7 +47,11 @@ function* filterHeroesWorkerSaga(action) {
   try {
     yield put({ type: GET_FILTER_HEROES_START });
     const payloads = yield call(fetchHeroesWithFilter, action.filter);
-    yield put({ type: GET_FILTER_HEROES_SUCCESS, payload: payloads.data });
+    yield put({
+      type: GET_FILTER_HEROES_SUCCESS,
+      payload: payloads.data.resault,
+      filterHeroesPageCount: payloads.data.countPage,
+    });
   } catch (e) {
     yield put({ type: GET_FILTER_HEROES_FAILURE, payload: e });
   }
@@ -66,7 +71,7 @@ function* searchBoxHintsWorkerSaga(action) {
   try {
     yield put({ type: GET_SEARCH_BOX_HINTS_START });
     const payloads = yield call(fetchHeroesWithFilter, action.filter);
-    yield put({ type: GET_SEARCH_BOX_HINTS_SUCCESS, payload: payloads.data });
+    yield put({ type: GET_SEARCH_BOX_HINTS_SUCCESS, payload: payloads.data.resault });
   } catch (e) {
     yield put({ type: GET_SEARCH_BOX_HINTS_FAILURE, payload: e });
   }
@@ -76,7 +81,11 @@ function* getAllHeroesListSaga(action) {
   try {
     yield put({ type: GET_ALL_HEROES_LIST_START });
     const payloads = yield call(fetchAllHeroList, action.page, action.limit);
-    yield put({ type: GET_ALL_HEROES_LIST_SUCCESS, payload: payloads.data });
+    yield put({
+      type: GET_ALL_HEROES_LIST_SUCCESS,
+      payload: payloads.data.resault,
+      allHeroesListPage: payloads.data.countPage,
+    });
   } catch (e) {
     yield put({ type: GET_ALL_HEROES_LIST_FAILURE, payload: e });
   }

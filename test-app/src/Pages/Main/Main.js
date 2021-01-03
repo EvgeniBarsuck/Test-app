@@ -14,27 +14,9 @@ const initialState = {
   searchBox: '',
 };
 
-const style = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '10px',
-  },
-  root2: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    marginTop: '10px',
-  },
-};
-
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
-    window.onscroll = this.windowScroll.bind(this);
     this.state = initialState;
   }
 
@@ -56,12 +38,14 @@ class MainPage extends React.Component {
     }
   };
 
-  windowScroll() {
-    const { scrollTop, offsetHeight } = document.documentElement;
-    if (window.innerHeight + scrollTop === offsetHeight) {
-      const page = this.props.data.page + 1;
-      this.props.changeLimitAndPage(this.props.data.limit, page);
-      this.props.getAllHeroesListHero(this.props.data.page, this.props.data.limit);
+  windowScroll(e) {
+    const { scrollTop, clientHeight, scrollHeight } = e.target;
+    if (scrollTop + clientHeight === scrollHeight) {
+      if (this.props.data.page <= this.props.data.allHeroesListPage) {
+        const page = this.props.data.page + 1;
+        this.props.changeLimitAndPage(this.props.data.limit, page);
+        this.props.getAllHeroesListHero(page, this.props.data.limit);
+      }
     }
   }
 
@@ -72,9 +56,10 @@ class MainPage extends React.Component {
       gender,
       searchBox,
     } = this.state;
+    const { classes } = this.props;
     return (
-      <>
-        <div style={style.root2}>
+      <div>
+        <div className={classes.search}>
           <HeroSelect onSelecthandleChange={this.onSelecthandleChange} />
           <Select
             status={status}
@@ -102,13 +87,13 @@ class MainPage extends React.Component {
             </Button>
           </Link>
         </div>
-        <div style={style.root}>
+        <div className={classes.card} onScroll={(e) => this.windowScroll(e)}>
           {this.props.data.allHeroesList.map((item) => (
             <Cards item={item} key={item.id} />
           ))}
         </div>
         {this.props.data ? '' : <p>End.</p>}
-      </>
+      </div>
     );
   }
 }
@@ -117,12 +102,17 @@ MainPage.propTypes = {
   data: PropTypes.shape({
     limit: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
+    allHeroesListPage: PropTypes.number,
     allHeroesList: PropTypes.arrayOf(Object).isRequired,
   }).isRequired,
   getAllHeroesListHero: PropTypes.func.isRequired,
   getFilterHeroesActions: PropTypes.func.isRequired,
   clearAllHeroList: PropTypes.func.isRequired,
   changeLimitAndPage: PropTypes.func.isRequired,
+  classes: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    card: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-export default MainPage;
+export default React.memo(MainPage);
