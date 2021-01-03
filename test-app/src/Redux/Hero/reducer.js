@@ -23,8 +23,6 @@ const initialState = {
   selectedHero: {},
   searchBoxHints: [],
   filterHeroes: [],
-  filterHeroesPageCount: 1,
-  filterPage: 1,
   loading: true,
 };
 
